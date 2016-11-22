@@ -9,9 +9,27 @@ namespace octet {
   class example_lsystems : public app {
     // scene for drawing box
     ref<visual_scene> app_scene;
+    
+    // L-systems variables
+    std::string axiom;
+
+    struct rule {
+      char variable;
+      std::string replacement;
+    };
+
+    std::vector<rule> rules;
+
+
   public:
     /// this is called when we construct the class before everything is initialised.
     example_lsystems(int argc, char **argv) : app(argc, argv) {
+      axiom = "A";
+      rules = {
+        {'A', "ABA"},
+        {'B', "A"}
+      };
+
     }
 
     /// this is called once OpenGL is initialized
