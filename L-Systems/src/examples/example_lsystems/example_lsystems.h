@@ -27,7 +27,11 @@ namespace octet {
     example_lsystems(int argc, char **argv) : app(argc, argv) {
       axiom = "F";
       rules = {
-        {'F', "F[+F]F[-F]F"}
+        { 'F', "F[+F]F[-F]F" },
+        { '[', "[" },
+        { ']', "]" },
+        { '+', "+" },
+        { '-', "-" }        
       };
       counter = 0;
 
@@ -35,18 +39,16 @@ namespace octet {
 
     void applyRules() {
       std::string new_str;
-      new_str = axiom;
       for (int i = 0; i < (int)axiom.length(); i++) {
-        for (int j = 0; i < (int)rules.size(); j++) {
+        for (int j = 0; j < (int)rules.size(); j++) {
           if (axiom.at(i) == rules.at(j).variable) {
-            new_str.erase(i);
             new_str.append(rules.at(j).replacement);
-            axiom = new_str;
             break;
           }
         }
       }
-
+      axiom = new_str;
+      printf("ApplyRules\n");
     }
 
     /// this is called once OpenGL is initialized
