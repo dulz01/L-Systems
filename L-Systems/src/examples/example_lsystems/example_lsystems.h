@@ -5,6 +5,34 @@
 // Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
 namespace octet {
+
+  class turtle {
+    float x_, y_;
+    float dir_;
+
+    std::vector<float> points_;
+
+  public:
+    turtle() : x_(0), y_(-1), dir_(0) {}
+
+    // specific instructions of the turtle's movements
+    void forward(float distance) { }
+    void left(float angle) { }
+    void right(float angle) { }
+
+    void draw_lines() {
+      // using the points data from generate_tree(), draw the lines between them.
+    }
+
+    void generate_tree() {
+      // make the turtle go through the string instructions for the tree.
+      // save the positions of the points
+      // turtle generates a tree for each iteration.
+    }
+
+  };
+
+
   /// Scene containing a box with octet.
   class example_lsystems : public app {
     // scene for drawing box
@@ -39,10 +67,10 @@ namespace octet {
 
     void applyRules() {
       std::string new_str;
-      for (int i = 0; i < (int)axiom.length(); i++) {
-        for (int j = 0; j < (int)rules.size(); j++) {
+      for (int i = 0; i < axiom.length(); i++) {
+        for (int j = 0; j < rules.size(); j++) {
           if (axiom.at(i) == rules.at(j).variable) {
-            new_str.append(rules.at(j).replacement);
+            new_str += rules.at(j).replacement;
             break;
           }
         }
@@ -75,7 +103,7 @@ namespace octet {
       }
 
       glBegin(GL_LINES);
-      glVertex2d(-1.0f, -1.0f);
+      glVertex2d(0.0f, 0.0f);
       glVertex2d(1.0f, 1.0f);
       glEnd();
 
