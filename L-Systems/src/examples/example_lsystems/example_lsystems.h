@@ -31,7 +31,7 @@ namespace octet {
         { '[', "[" },
         { ']', "]" },
         { '+', "+" },
-        { '-', "-" }        
+        { '-', "-" }
       };
       counter = 0;
 
@@ -69,21 +69,26 @@ namespace octet {
       get_viewport_size(vx, vy);
       app_scene->begin_render(vx, vy);
 
-      if (counter < 5) {
-        std::cout << "Iteration " << counter++ << " : "<< axiom << std::endl;
+      if (counter < 7) {
+        std::cout << "Iteration " << counter++ << " : " << axiom << std::endl;
         applyRules();
       }
 
-      // update matrices. assume 30 fps.
-      app_scene->update(1.0f / 30);
+      glBegin(GL_LINES);
+      glVertex2d(-1.0f, -1.0f);
+      glVertex2d(1.0f, 1.0f);
+      glEnd();
 
-      // draw the scene
-      app_scene->render((float)vx / vy);
+      //  // update matrices. assume 30 fps.
+      //  app_scene->update(1.0f / 30);
 
-      // tumble the box  (there is only one mesh instance)
-      scene_node *node = app_scene->get_mesh_instance(0)->get_node();
-      node->rotate(1, vec3(1, 0, 0));
-      node->rotate(1, vec3(0, 1, 0));
+      //  // draw the scene
+      //  app_scene->render((float)vx / vy);
+
+      //  // tumble the box  (there is only one mesh instance)
+      //  scene_node *node = app_scene->get_mesh_instance(0)->get_node();
+      //  node->rotate(1, vec3(1, 0, 0));
+      //  node->rotate(1, vec3(0, 1, 0));
     }
   };
 }
