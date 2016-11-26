@@ -11,12 +11,15 @@ namespace octet {
     float dir_;
 
     std::vector<float> points_;
+    std::vector<float> lines_;
 
   public:
     turtle() : x_(0), y_(-1), dir_(0) {}
 
     // specific instructions of the turtle's movements
-    void forward(float distance) { }
+    void forward(float distance) {
+     //if i go forward, I have to take angle into account. 
+    }
     void left(float angle) { }
     void right(float angle) { }
 
@@ -39,21 +42,19 @@ namespace octet {
     ref<visual_scene> app_scene;
 
     // L-systems variables
-    std::string axiom;
-
+    std::string treeStringMap;
     struct rule {
       char variable;
       std::string replacement;
     };
-
     std::vector<rule> rules;
-
     int counter;
+    float rotation;
 
   public:
     /// this is called when we construct the class before everything is initialised.
     example_lsystems(int argc, char **argv) : app(argc, argv) {
-      axiom = "F";
+      treeStringMap = "F";
       rules = {
         { 'F', "F[+F]F[-F]F" },
         { '[', "[" },
@@ -63,19 +64,21 @@ namespace octet {
       };
       counter = 0;
 
+      rotation = 25.7f;
     }
 
+    // create the tree string map
     void applyRules() {
       std::string new_str;
-      for (int i = 0; i < axiom.length(); i++) {
+      for (int i = 0; i < treeStringMap.length(); i++) {
         for (int j = 0; j < rules.size(); j++) {
-          if (axiom.at(i) == rules.at(j).variable) {
+          if (treeStringMap.at(i) == rules.at(j).variable) {
             new_str += rules.at(j).replacement;
             break;
           }
         }
       }
-      axiom = new_str;
+      treeStringMap = new_str;
       printf("ApplyRules\n");
     }
 
@@ -98,7 +101,7 @@ namespace octet {
       app_scene->begin_render(vx, vy);
 
       if (counter < 7) {
-        std::cout << "Iteration " << counter++ << " : " << axiom << std::endl;
+        std::cout << "Iteration " << counter++ << " : " << treeStringMap << std::endl;
         applyRules();
       }
 
