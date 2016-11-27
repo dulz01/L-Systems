@@ -7,47 +7,92 @@
 namespace octet {
 
   class turtle {
+    struct point {
+      float x;
+      float y;
+    };
+
+    struct line {
+      point start;
+      point end;
+    };
+
+    point position_;
+
     float x_, y_;
     float dir_;
     float pi_;
 
-    std::vector<float> points_;
-    std::vector<float> lines_;
+    std::vector<point> points_;
+    std::vector<line> lines_;
 
   public:
-    turtle() : x_(0.0f), y_(0.0f), dir_(90.0f), pi_(3.141592653f) {}
+    turtle() : dir_(90.0f), pi_(3.141592653f) {
+      position_.x = 0.0f;
+      position_.y = 0.0f;
+    }
 
     // specific instructions of the turtle's movements
-    void forward(float distance) {
-      float next_x = x_ + distance * cos(pi_ * dir_ / 180.0);
-      float next_y = y_ + distance * sin(pi_ * dir_ / 180.0);
+    void go_forward(float distance) {
+      float next_x = position_.x + distance * cos(pi_ * dir_ / 180.0);
+      float next_y = position_.y + distance * sin(pi_ * dir_ / 180.0);
 
-      glBegin(GL_LINES);
-      glVertex2d(x_, y_);
-      glVertex2d(next_x, next_y);
-      glEnd();
+      line path;
+      path.start = position_;
+      position_.x = next_x;
+      position_.y = next_y;
 
-      x_ = next_x;
-      y_ = next_y;
+      path.end = position_;
+
+      lines_.push_back(path);
     }
-    void left(float angle) {
+
+    void turn_left(float angle) {
       dir_ += angle;
     }
 
-    void right(float angle) {
+    void turn_right(float angle) {
       dir_ -= angle;
     }
 
     void draw_lines() {
       // using the points data from generate_tree(), draw the lines between them.
+
+      glBegin(GL_LINES);
+      glVertex2d(x_, y_);
+      glVertex2d(x_, y_);
+      glEnd();
     }
 
-    void generate_tree() {
+    void generate_tree(std::string treeStringMap) {
       // make the turtle go through the string instructions for the tree.
       // save the positions of the points
       // turtle generates a tree for each iteration.
-    }
+      // Test String: F[+F]F[-F]F
 
+      for (int i = 0; i < treeStringMap.length(); i++) {
+        if (treeStringMap.at(i) == 'F') {
+          go_forward(0.0125f);
+        }
+        else if (treeStringMap.at(i) == '+') {
+          turn_left(27.5f);
+        }
+
+        else if (treeStringMap.at(i) == '-') {
+          turn_right(27.5f);
+        }
+
+        else if (treeStringMap.at(i) == '[') {
+
+        }
+
+        else if (treeStringMap.at(i) == ']') {
+
+        }
+      } // end of for loop
+
+
+    }
   };
 
 
@@ -122,11 +167,11 @@ namespace octet {
         applyRules();
       }
 
-      t.forward(0.125f);
-      t.right(27.5f);
-      t.forward(0.125f);
-      t.left(90.5f);
-      t.forward(0.125f);
+      t.go_forward(0.125f);
+      t.turn_right(27.5f);
+      t.go_forward(0.125f);
+      t.turn_left(90.5f);
+      t.go_forward(0.125f);
     }
   };
 }
