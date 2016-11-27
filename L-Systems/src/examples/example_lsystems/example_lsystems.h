@@ -9,16 +9,27 @@ namespace octet {
   class turtle {
     float x_, y_;
     float dir_;
+    float pi_;
 
     std::vector<float> points_;
     std::vector<float> lines_;
 
   public:
-    turtle() : x_(0), y_(-1), dir_(0) {}
+    turtle() : x_(0), y_(-1), dir_(117.5f), pi_(3.141592653f) {}
 
     // specific instructions of the turtle's movements
     void forward(float distance) {
      //if i go forward, I have to take angle into account. 
+      float next_x = x_ + distance * cos(pi_ * dir_ / 180.0);
+      float next_y = y_ + distance * sin(pi_ * dir_ / 180.0);
+
+      glBegin(GL_LINES);
+      glVertex2d(x_, y_);
+      glVertex2d(next_x, next_y);
+      glEnd();
+
+      //x_ = next_x;
+      //y_ = next_y;
     }
     void left(float angle) { }
     void right(float angle) { }
@@ -50,6 +61,8 @@ namespace octet {
     std::vector<rule> rules;
     int counter;
     float rotation;
+
+    turtle t;
 
   public:
     /// this is called when we construct the class before everything is initialised.
@@ -105,10 +118,12 @@ namespace octet {
         applyRules();
       }
 
-      glBegin(GL_LINES);
-      glVertex2d(0.0f, 0.0f);
-      glVertex2d(1.0f, 1.0f);
-      glEnd();
+      t.forward(1.0f);
+
+      //glBegin(GL_LINES);
+      //glVertex2d(0.0f, 0.0f);
+      //glVertex2d(1.0f, 1.0f);
+      //glEnd();
 
       //  // update matrices. assume 30 fps.
       //  app_scene->update(1.0f / 30);
