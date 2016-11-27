@@ -66,4 +66,7 @@ public:
     treeStringMap = new_str;
   }
 
+  std::string& get_TreeStringMap() {
+    return treeStringMap;
+  }
 };

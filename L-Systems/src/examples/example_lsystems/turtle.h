@@ -74,7 +74,7 @@ public:
     //glEnd();
   }
 
-  void generate_tree(std::string treeStringMap) {
+  void generate_tree(std::string& treeStringMap) {
     // make the turtle go through the string instructions for the tree.
     // save the positions of the points
     // turtle generates a tree for each iteration.

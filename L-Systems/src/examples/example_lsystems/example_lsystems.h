@@ -38,7 +38,7 @@ namespace octet {
         ts.applyRules();
       }
 
-      t.generate_tree(treeStringMap);
+      t.generate_tree(ts.get_TreeStringMap());
     }
 
     /// this is called to draw the world
