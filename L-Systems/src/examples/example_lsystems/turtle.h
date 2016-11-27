@@ -20,14 +20,7 @@ class turtle {
   std::vector<point> branch_points_;
   std::vector<line> lines_;
 
-public:
-  turtle() : pi_(3.141592653f) {
-    position_.x = 0.0f;
-    position_.y = -1.0f;
-    position_.dir = 90.0f;
-  }
-
-  // specific instructions of the turtle's movements
+private:
   void go_forward(float distance) {
     float next_x = position_.x + distance * cos(pi_ * position_.dir / 180.0);
     float next_y = position_.y + distance * sin(pi_ * position_.dir / 180.0);
@@ -58,39 +51,35 @@ public:
     branch_points_.pop_back();
   }
 
+public:
+  turtle() : pi_(3.141592653f) {
+    position_.x = 0.0f;
+    position_.y = -1.0f;
+    position_.dir = 90.0f;
+  }
+
   void draw_lines() {
     // using the points data from generate_tree(), draw the lines between them.
-
-    for (int i = 0; i < lines_.size(); i++)
-    {
+    for (int i = 0; i < lines_.size(); i++) {
       glBegin(GL_LINES);
       glVertex2d(lines_.at(i).start.x, lines_.at(i).start.y);
       glVertex2d(lines_.at(i).end.x, lines_.at(i).end.y);
       glEnd();
     }
-    //glBegin(GL_LINES);
-    //glVertex2d(x_, y_);
-    //glVertex2d(x_, y_);
-    //glEnd();
   }
 
-  void generate_tree(std::string& treeStringMap) {
-    // make the turtle go through the string instructions for the tree.
-    // save the positions of the points
-    // turtle generates a tree for each iteration.
-    // Test String: F[+F]F[-F]F
-
+  void generate_tree(std::string& treeStringMap, float rotationAngle) {
     for (int i = 0; i < treeStringMap.length(); i++) {
       if (treeStringMap.at(i) == 'F') {
         go_forward(0.025f);
       }
 
       else if (treeStringMap.at(i) == '+') {
-        turn_left(22.5f);
+        turn_left(rotationAngle);
       }
 
       else if (treeStringMap.at(i) == '-') {
-        turn_right(22.5f);
+        turn_right(rotationAngle);
       }
 
       else if (treeStringMap.at(i) == '[') {
@@ -99,10 +88,6 @@ public:
 
       else if (treeStringMap.at(i) == ']') {
         return_to_trunk();
-      }
-
-      else {
-        continue;
       }
     } // end of for loop
   }

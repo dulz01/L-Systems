@@ -22,10 +22,9 @@ namespace octet {
   public:
     /// this is called when we construct the class before everything is initialised.
     example_lsystems(int argc, char **argv) : app(argc, argv) {
-      
       counter = 0;
-      max_counter = 5;
-      rotation = 25.7f;
+      max_counter = 4;
+      rotation = 22.5f;
     }
 
 
@@ -38,7 +37,7 @@ namespace octet {
         ts.applyRules();
       }
 
-      t.generate_tree(ts.get_TreeStringMap());
+      t.generate_tree(ts.get_TreeStringMap(), rotation);
     }
 
     /// this is called to draw the world
