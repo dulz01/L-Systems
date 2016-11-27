@@ -6,95 +6,6 @@
 //
 namespace octet {
 
-  class turtle {
-    struct point {
-      float x;
-      float y;
-    };
-
-    struct line {
-      point start;
-      point end;
-    };
-
-    point position_;
-
-    float x_, y_;
-    float dir_;
-    float pi_;
-
-    std::vector<point> points_;
-    std::vector<line> lines_;
-
-  public:
-    turtle() : dir_(90.0f), pi_(3.141592653f) {
-      position_.x = 0.0f;
-      position_.y = 0.0f;
-    }
-
-    // specific instructions of the turtle's movements
-    void go_forward(float distance) {
-      float next_x = position_.x + distance * cos(pi_ * dir_ / 180.0);
-      float next_y = position_.y + distance * sin(pi_ * dir_ / 180.0);
-
-      line path;
-      path.start = position_;
-      position_.x = next_x;
-      position_.y = next_y;
-
-      path.end = position_;
-
-      lines_.push_back(path);
-    }
-
-    void turn_left(float angle) {
-      dir_ += angle;
-    }
-
-    void turn_right(float angle) {
-      dir_ -= angle;
-    }
-
-    void draw_lines() {
-      // using the points data from generate_tree(), draw the lines between them.
-
-      glBegin(GL_LINES);
-      glVertex2d(x_, y_);
-      glVertex2d(x_, y_);
-      glEnd();
-    }
-
-    void generate_tree(std::string treeStringMap) {
-      // make the turtle go through the string instructions for the tree.
-      // save the positions of the points
-      // turtle generates a tree for each iteration.
-      // Test String: F[+F]F[-F]F
-
-      for (int i = 0; i < treeStringMap.length(); i++) {
-        if (treeStringMap.at(i) == 'F') {
-          go_forward(0.0125f);
-        }
-        else if (treeStringMap.at(i) == '+') {
-          turn_left(27.5f);
-        }
-
-        else if (treeStringMap.at(i) == '-') {
-          turn_right(27.5f);
-        }
-
-        else if (treeStringMap.at(i) == '[') {
-
-        }
-
-        else if (treeStringMap.at(i) == ']') {
-
-        }
-      } // end of for loop
-
-
-    }
-  };
-
 
   /// Scene containing a box with octet.
   class example_lsystems : public app {
@@ -117,8 +28,38 @@ namespace octet {
     /// this is called when we construct the class before everything is initialised.
     example_lsystems(int argc, char **argv) : app(argc, argv) {
       treeStringMap = "F";
+
+      //-----------------------------------------------------------------------
+      // Sample tree rules
+      //-----------------------------------------------------------------------
+      //n=5, angle=25.7
+      //axiom = F
+      //F->F[+F]F[-F]F
+      
+      //n=5, angle=20
+      //axiom = F
+      //F[+F]F[-F][F]
+      
+      //n=4, angle=22.5
+      //axiom = F
+      //FF-[-F+F+F]+[+F-F-F]
+      
+      //n=7, angle=20
+      //axiom = X
+      //X->F[+X]F[-X]+X
+      //F->FF
+
+      //n=7, angle=25.7
+      //axiom = X
+      //X->F[+X][-X]FX
+      //F->FF
+
+      //n=5, angle=22.5
+      //axiom = X
+      //X->F-[[X]+X]+F[+FX]-X
+      //F->FF
       rules = {
-        { 'F', "F[+F]F[-F]F" },
+        { 'F', "FF-[-F+F+F]+[+F-F-F]" },
         { '[', "[" },
         { ']', "]" },
         { '+', "+" },
@@ -141,7 +82,6 @@ namespace octet {
         }
       }
       treeStringMap = new_str;
-      printf("ApplyRules\n");
     }
 
     /// this is called once OpenGL is initialized
@@ -149,11 +89,11 @@ namespace octet {
       app_scene = new visual_scene();
       app_scene->create_default_camera_and_lights();
 
-      material *red = new material(vec4(1, 0, 0, 1));
-      mesh_box *box = new mesh_box(vec3(4));
-      scene_node *node = new scene_node();
-      app_scene->add_child(node);
-      app_scene->add_mesh_instance(new mesh_instance(node, box, red));
+      //material *red = new material(vec4(1, 0, 0, 1));
+      //mesh_box *box = new mesh_box(vec3(4));
+      //scene_node *node = new scene_node();
+      //app_scene->add_child(node);
+      //app_scene->add_mesh_instance(new mesh_instance(node, box, red));
     }
 
     /// this is called to draw the world
@@ -162,16 +102,18 @@ namespace octet {
       get_viewport_size(vx, vy);
       app_scene->begin_render(vx, vy);
 
-      if (counter < 7) {
+      if (counter < 10) {
         std::cout << "Iteration " << counter++ << " : " << treeStringMap << std::endl;
         applyRules();
       }
 
-      t.go_forward(0.125f);
-      t.turn_right(27.5f);
-      t.go_forward(0.125f);
-      t.turn_left(90.5f);
-      t.go_forward(0.125f);
+      t.generate_tree(treeStringMap);
+      t.draw_lines();
+      //t.go_forward(0.125f);
+      //t.turn_right(27.5f);
+      //t.go_forward(0.125f);
+      //t.turn_left(90.5f);
+      //t.go_forward(0.125f);
     }
   };
 }

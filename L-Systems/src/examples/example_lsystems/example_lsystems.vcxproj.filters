@@ -428,6 +428,9 @@
       <Filter>containers</Filter>
     </ClInclude>
     <ClInclude Include="example_lsystems.h" />
+    <ClInclude Include="turtle.h">
+      <Filter>scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\mesh_builder.inl">
