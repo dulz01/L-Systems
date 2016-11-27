@@ -82,15 +82,15 @@ public:
 
     for (int i = 0; i < treeStringMap.length(); i++) {
       if (treeStringMap.at(i) == 'F') {
-        go_forward(0.0125f);
+        go_forward(0.025f);
       }
 
       else if (treeStringMap.at(i) == '+') {
-        turn_left(27.5f);
+        turn_left(22.5f);
       }
 
       else if (treeStringMap.at(i) == '-') {
-        turn_right(27.5f);
+        turn_right(22.5f);
       }
 
       else if (treeStringMap.at(i) == '[') {
@@ -99,6 +99,10 @@ public:
 
       else if (treeStringMap.at(i) == ']') {
         return_to_trunk();
+      }
+
+      else {
+        continue;
       }
     } // end of for loop
   }

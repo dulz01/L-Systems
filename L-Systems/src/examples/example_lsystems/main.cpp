@@ -10,6 +10,7 @@
 #define OCTET_BULLET 1
 
 #include "../../octet.h"
+#include "tree_string.h"
 #include "turtle.h"
 #include "example_lsystems.h"
 
