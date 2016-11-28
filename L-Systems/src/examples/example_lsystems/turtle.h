@@ -71,6 +71,9 @@ public:
   }
 
   void generate_tree(std::string& treeStringMap, float rotationAngle) {
+    lines_.clear();
+    branch_points_.clear();
+
     for (int i = 0; i < treeStringMap.length(); i++) {
       if (treeStringMap.at(i) == 'F') {
         go_forward(0.0125f);

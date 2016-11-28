@@ -25,19 +25,20 @@ public:
   }
 
   void load(std::string infile) {
+    rules.clear();
     std::ifstream file(infile);
 
     file >> counter_ >> rotation_ >> currentState;
-    
     rule r;
+
     while (file >> r.symbols >> r.replacement) {
       rules.push_back(r);
     }
   }
 
-  // Apply the rules to the axiom
   void applyRules() {
     std::string new_str;
+    previousState = currentState;
     for (int i = 0; i < currentState.length(); i++) {
       for (std::vector<rule>::iterator it = rules.begin();
         it != rules.end(); ++it) {
@@ -49,7 +50,6 @@ public:
         }
       }
     }
-    previousState = currentState;
     currentState = new_str;
   }
 

@@ -66,6 +66,18 @@ namespace octet {
     key_mmb,
     key_rmb,
 
+    // numerical characters
+    key_num_0 = 48,
+    key_num_1,
+    key_num_2,
+    key_num_3,
+    key_num_4,
+    key_num_5,
+    key_num_6,
+    key_num_7,
+    key_num_8,
+    key_num_9,
+
     // alpha characters
     key_a = 65,
     key_b,
