@@ -28,7 +28,8 @@ namespace octet {
         ts[l_system_number_].applyRules();
       }
 
-      t.generate_tree(ts[0].get_TreeStringMap(), ts[l_system_number_].get_rotation());
+      t.generate_tree(ts[l_system_number_].get_TreeStringMap(), 
+        ts[l_system_number_].get_rotation());
     }
 
     void select_tree() {

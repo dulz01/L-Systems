@@ -51,11 +51,15 @@ private:
     branch_points_.pop_back();
   }
 
-public:
-  turtle() : pi_(3.141592653f) {
+  void reset() {
     position_.x = 0.0f;
     position_.y = -1.0f;
     position_.dir = 90.0f;
+  }
+
+public:
+  turtle() : pi_(3.141592653f) {
+    reset();
   }
 
   void draw_lines() {
@@ -95,5 +99,7 @@ public:
         return_to_trunk();
       }
     } // end of for loop
+
+    reset();
   }
 };
