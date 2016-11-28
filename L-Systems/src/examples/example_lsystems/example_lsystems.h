@@ -13,53 +13,49 @@ namespace octet {
     ref<visual_scene> app_scene;
 
     // L-systems variables
-    int l_system_number_;
-    tree_string ts[6];
+    tree_string ts;
     turtle t;
 
   public:
     /// this is called when we construct the class before everything is initialised.
-    example_lsystems(int argc, char **argv) : app(argc, argv) {
-      l_system_number_ = 0;
-    }
+    example_lsystems(int argc, char **argv) : app(argc, argv) {}
     
     void build_tree() {
-      for (int i = 0; i < ts[l_system_number_].get_counter(); i++) {
-        ts[l_system_number_].applyRules();
+      for (int i = 0; i < ts.get_counter(); i++) {
+        ts.applyRules();
       }
 
-      t.generate_tree(ts[l_system_number_].get_TreeStringMap(), 
-        ts[l_system_number_].get_rotation());
+      t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation());
     }
 
     void select_tree() {
       if (is_key_going_down(key_num_1)) {
-        l_system_number_ = 0;
+        ts.load("Tree1.txt");
         build_tree();
       }
 
       if (is_key_going_down(key_num_2)) {
-        l_system_number_ = 1;
+        ts.load("Tree2.txt");
         build_tree();
       }
 
       if (is_key_going_down(key_num_3)) {
-        l_system_number_ = 2;
+        ts.load("Tree3.txt");
         build_tree();
       }
 
       if (is_key_going_down(key_num_4)) {
-        l_system_number_ = 3;
+        ts.load("Tree4.txt");
         build_tree();
       }
 
       if (is_key_going_down(key_num_5)) {
-        l_system_number_ = 4;
+        ts.load("Tree5.txt");
         build_tree();
       }
 
       if (is_key_going_down(key_num_6)) {
-        l_system_number_ = 5;
+        ts.load("Tree6.txt");
         build_tree();
       }
     }
@@ -69,12 +65,7 @@ namespace octet {
       app_scene = new visual_scene();
       app_scene->create_default_camera_and_lights();
 
-      ts[0].load("Tree1.txt");
-      ts[1].load("Tree2.txt");
-      ts[2].load("Tree3.txt");
-      ts[3].load("Tree4.txt");
-      ts[4].load("Tree5.txt");
-      ts[5].load("Tree6.txt");
+      ts.load("Tree1.txt");
 
       build_tree();
     }
