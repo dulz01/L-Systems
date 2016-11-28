@@ -73,7 +73,7 @@ public:
   void generate_tree(std::string& treeStringMap, float rotationAngle) {
     for (int i = 0; i < treeStringMap.length(); i++) {
       if (treeStringMap.at(i) == 'F') {
-        go_forward(0.025f);
+        go_forward(0.0125f);
       }
 
       else if (treeStringMap.at(i) == '+') {

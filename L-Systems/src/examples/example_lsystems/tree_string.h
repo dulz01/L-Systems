@@ -6,25 +6,33 @@ class tree_string {
     std::string replacement;
   };
 
+  int counter_;
+  float rotation_;
+
   std::vector<rule> rules;
   std::string currentState;
   std::string previousState;
 
 public:
-  tree_string() {
-    currentState = "F";
-    rules = {
-      //{ 'X', "F-[[X]+X]+F[+FX]-X" },
-      { 'F', "FF-[-F+F+F]+[+F-F-F]" },
-      { '[', "[" },
-      { ']', "]" },
-      { '+', "+" },
-      { '-', "-" }
-    };
+  tree_string() {}
+
+  int get_counter() {
+    return counter_;
   }
 
-  void Load(std::string file) {
+  float get_rotation() {
+    return rotation_;
+  }
 
+  void load(std::string infile) {
+    std::ifstream file(infile);
+
+    file >> counter_ >> rotation_ >> currentState;
+    
+    rule r;
+    while (file >> r.symbols >> r.replacement) {
+      rules.push_back(r);
+    }
   }
 
   // Apply the rules to the axiom

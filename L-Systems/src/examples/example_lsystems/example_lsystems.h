@@ -15,16 +15,10 @@ namespace octet {
     // L-systems variables
     tree_string ts;
     turtle t;
-    int counter;
-    int max_counter;
-    float rotation;
 
   public:
     /// this is called when we construct the class before everything is initialised.
     example_lsystems(int argc, char **argv) : app(argc, argv) {
-      counter = 0;
-      max_counter = 4;
-      rotation = 22.5f;
     }
 
 
@@ -33,11 +27,13 @@ namespace octet {
       app_scene = new visual_scene();
       app_scene->create_default_camera_and_lights();
 
-      for (int i = 0; i < max_counter; i++) {
+      ts.load("Tree1.txt");
+
+      for (int i = 0; i < ts.get_counter(); i++) {
         ts.applyRules();
       }
 
-      t.generate_tree(ts.get_TreeStringMap(), rotation);
+      t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation());
     }
 
     /// this is called to draw the world
