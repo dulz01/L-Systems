@@ -13,17 +13,22 @@ class turtle {
   };
 
   point position_;
+
   line path_;
 
   float pi_;
+  float distance_;
+  bool out_of_view;
 
+  std::vector<point> all_points_;
   std::vector<point> branch_points_;
   std::vector<line> lines_;
 
 private:
-  void go_forward(float distance) {
-    float next_x = position_.x + distance * cos(pi_ * position_.dir / 180.0);
-    float next_y = position_.y + distance * sin(pi_ * position_.dir / 180.0);
+  void go_forward() {
+
+    float next_x = position_.x + distance_ * cos(pi_ * position_.dir / 180.0);
+    float next_y = position_.y + distance_ * sin(pi_ * position_.dir / 180.0);
 
     path_.start = position_;
     position_.x = next_x;
@@ -31,6 +36,7 @@ private:
 
     path_.end = position_;
 
+    all_points_.push_back(position_);
     lines_.push_back(path_);
   }
 
@@ -57,8 +63,26 @@ private:
     position_.dir = 90.0f;
   }
 
+  bool is_in_view(point p) {
+    return (p.x >= -1 && p.x <= 1 && p.y >= -1 && p.y <= 1);
+  }
+
+  bool check_within_bounds() {
+    for (std::vector<point>::iterator it = all_points_.begin();
+      it != all_points_.end(); ++it) {
+      if (!is_in_view(*it)) {
+        return false;
+      } // end of if statement
+      else {
+        return true;
+      } // end of else statement
+    } // end of for loop
+  }
+
 public:
-  turtle() : pi_(3.141592653f) {
+  turtle() : pi_(3.141592653f), distance_(0.125f) {
+    out_of_view = true;
+
     reset();
   }
 
@@ -75,31 +99,26 @@ public:
   }
 
   void generate_tree(std::string& treeStringMap, float rotationAngle) {
-    lines_.clear();
-    branch_points_.clear();
+      lines_.clear();
+      branch_points_.clear();
+      for (int i = 0; i < treeStringMap.length(); i++) {
+        if (treeStringMap.at(i) == 'F') {
+          go_forward();
+        }
+        else if (treeStringMap.at(i) == '+') {
+          turn_left(rotationAngle);
+        }
+        else if (treeStringMap.at(i) == '-') {
+          turn_right(rotationAngle);
+        }
+        else if (treeStringMap.at(i) == '[') {
+          new_branch();
+        }
+        else if (treeStringMap.at(i) == ']') {
+          return_to_trunk();
+        }
+      } // end of for loop
 
-    for (int i = 0; i < treeStringMap.length(); i++) {
-      if (treeStringMap.at(i) == 'F') {
-        go_forward(0.0125f);
-      }
-
-      else if (treeStringMap.at(i) == '+') {
-        turn_left(rotationAngle);
-      }
-
-      else if (treeStringMap.at(i) == '-') {
-        turn_right(rotationAngle);
-      }
-
-      else if (treeStringMap.at(i) == '[') {
-        new_branch();
-      }
-
-      else if (treeStringMap.at(i) == ']') {
-        return_to_trunk();
-      }
-    } // end of for loop
-
-    reset();
+      reset();
   }
 };
