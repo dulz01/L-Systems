@@ -7,11 +7,12 @@ class tree_string {
   };
 
   std::vector<rule> rules;
-  std::string treeStringMap;
+  std::string currentState;
+  std::string previousState;
 
 public:
   tree_string() {
-    treeStringMap = "F";
+    currentState = "F";
     rules = {
       //{ 'X', "F-[[X]+X]+F[+FX]-X" },
       { 'F', "FF-[-F+F+F]+[+F-F-F]" },
@@ -22,21 +23,29 @@ public:
     };
   }
 
-  // create the tree string
+  void Load(std::string file) {
+
+  }
+
+  // Apply the rules to the axiom
   void applyRules() {
     std::string new_str;
-    for (int i = 0; i < treeStringMap.length(); i++) {
-      for (int j = 0; j < rules.size(); j++) {
-        if (treeStringMap.at(i) == rules.at(j).symbols) {
-          new_str += rules.at(j).replacement;
+    for (int i = 0; i < currentState.length(); i++) {
+      for (std::vector<rule>::iterator it = rules.begin();
+        it != rules.end(); ++it) {
+        rule r = *it;
+
+        if (currentState.at(i) == r.symbols) {
+          new_str += r.replacement;
           break;
         }
       }
     }
-    treeStringMap = new_str;
+    previousState = currentState;
+    currentState = new_str;
   }
 
   std::string& get_TreeStringMap() {
-    return treeStringMap;
+    return currentState;
   }
 };

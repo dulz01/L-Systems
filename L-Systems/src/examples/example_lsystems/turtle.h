@@ -60,10 +60,12 @@ public:
 
   void draw_lines() {
     // using the points data from generate_tree(), draw the lines between them.
-    for (int i = 0; i < lines_.size(); i++) {
+    for (std::vector<line>::iterator it = lines_.begin();
+      it != lines_.end(); ++it) {
+      line l = *it;
       glBegin(GL_LINES);
-      glVertex2d(lines_.at(i).start.x, lines_.at(i).start.y);
-      glVertex2d(lines_.at(i).end.x, lines_.at(i).end.y);
+      glVertex2d(l.start.x, l.start.y);
+      glVertex2d(l.end.x, l.end.y);
       glEnd();
     }
   }
