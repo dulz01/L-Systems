@@ -84,7 +84,6 @@ private:
   // formula taken from Greg Neill's post 
   // on: https://groups.google.com/forum/#!topic/alt.math/sj4tTuXpxE0
   void rescale() {
-    float tree_range_x = max_position_.x - min_position_.x;
     float tree_range_y = max_position_.y - min_position_.y;
     float screen_range = 1 - (-1);
 
@@ -117,7 +116,7 @@ public:
     lines_.clear();
     branch_points_.clear();
     for (int i = 0; i < treeStringMap.length(); i++) {
-      if (treeStringMap.at(i) == 'F') {
+      if (treeStringMap.at(i) == 'F' || treeStringMap.at(i) == 'A' || treeStringMap.at(i) == 'B') {
         go_forward();
       }
       else if (treeStringMap.at(i) == '+') {

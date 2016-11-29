@@ -70,6 +70,16 @@ namespace octet {
         ts.load("Tree6.txt");
         build_tree();
       }
+
+      if (is_key_going_down(key_num_7)) {
+        ts.load("DragonCurve.txt");
+        build_tree();
+      }
+
+      if (is_key_going_down(key_num_8)) {
+        ts.load("SierpinskiTriangle.txt");
+        build_tree();
+      }
     }
 
     /// this is called once OpenGL is initialized

@@ -9,10 +9,10 @@ class tree_string {
   int counter_;
   float rotation_;
 
-  std::vector<rule> rules;
-  std::vector<std::string> previousStates_;
+  std::vector<rule> rules_;
+  std::vector<std::string> previous_states_;
 
-  std::string currentState;
+  std::string current_state_;
 
 public:
   tree_string() {}
@@ -26,41 +26,41 @@ public:
   }
 
   void load(std::string infile) {
-    rules.clear();
+    rules_.clear();
     std::ifstream file(infile);
 
-    file >> counter_ >> rotation_ >> currentState;
+    file >> counter_ >> rotation_ >> current_state_;
     rule r;
 
     while (file >> r.symbols >> r.replacement) {
-      rules.push_back(r);
+      rules_.push_back(r);
     }
   }
 
   void decrement_iteration() {
-    currentState = previousStates_.back();
-    previousStates_.pop_back();
+    current_state_ = previous_states_.back();
+    previous_states_.pop_back();
   }
 
   void apply_rules() {
     std::string new_str;
-    previousStates_.push_back(currentState);
-    for (int i = 0; i < currentState.length(); i++) {
-      for (std::vector<rule>::iterator it = rules.begin();
-        it != rules.end(); ++it) {
+    previous_states_.push_back(current_state_);
+    for (int i = 0; i < current_state_.length(); i++) {
+      for (std::vector<rule>::iterator it = rules_.begin();
+        it != rules_.end(); ++it) {
         rule r = *it;
 
-        if (currentState.at(i) == r.symbols) {
+        if (current_state_.at(i) == r.symbols) {
           new_str += r.replacement;
           break;
         }
       }
     }
-    currentState = new_str;
-    //std::cout << currentState << std::endl;
+    current_state_ = new_str;
+    //std::cout << current_state_ << std::endl;
   }
 
   std::string& get_TreeStringMap() {
-    return currentState;
+    return current_state_;
   }
 };
