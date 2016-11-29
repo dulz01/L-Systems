@@ -22,10 +22,22 @@ namespace octet {
     
     void build_tree() {
       for (int i = 0; i < ts.get_counter(); i++) {
-        ts.applyRules();
+        ts.apply_rules();
       }
 
       t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation());
+    }
+
+    void modify_tree() {
+      if (is_key_going_down(key_q)) {
+        ts.decrement_iteration();
+        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation());
+      }
+
+      if (is_key_going_down(key_w)) {
+        ts.apply_rules();
+        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation());
+      }
     }
 
     void select_tree() {
@@ -76,7 +88,9 @@ namespace octet {
       get_viewport_size(vx, vy);
       app_scene->begin_render(vx, vy);
 
+      modify_tree();
       select_tree();
+
       t.draw_lines();
     }
   };

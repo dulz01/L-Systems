@@ -10,8 +10,9 @@ class tree_string {
   float rotation_;
 
   std::vector<rule> rules;
+  std::vector<std::string> previousStates_;
+
   std::string currentState;
-  std::string previousState;
 
 public:
   tree_string() {}
@@ -36,9 +37,14 @@ public:
     }
   }
 
-  void applyRules() {
+  void decrement_iteration() {
+    currentState = previousStates_.back();
+    previousStates_.pop_back();
+  }
+
+  void apply_rules() {
     std::string new_str;
-    previousState = currentState;
+    previousStates_.push_back(currentState);
     for (int i = 0; i < currentState.length(); i++) {
       for (std::vector<rule>::iterator it = rules.begin();
         it != rules.end(); ++it) {
@@ -51,6 +57,7 @@ public:
       }
     }
     currentState = new_str;
+    //std::cout << currentState << std::endl;
   }
 
   std::string& get_TreeStringMap() {
