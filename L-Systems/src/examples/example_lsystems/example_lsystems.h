@@ -77,7 +77,7 @@ namespace octet {
       }
 
       if (is_key_going_down(key_num_8)) {
-        ts.load("SierpinskiTriangle.txt");
+        ts.load("SierpinskiTriangle-Arrowhead.txt");
         build_tree();
       }
     }
