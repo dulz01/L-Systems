@@ -70,7 +70,7 @@ namespace octet {
         rotation_angle_ = ts.get_rotation();
         is_width_constrained_ = false;
         build_tree();
-      }
+      }      
 
       if (is_key_going_down(key_num_3)) {
         ts.load("Tree3.txt");
@@ -78,14 +78,14 @@ namespace octet {
         is_width_constrained_ = false;
         build_tree();
       }
-
+      
       if (is_key_going_down(key_num_4)) {
         ts.load("Tree4.txt");
         rotation_angle_ = ts.get_rotation();
         is_width_constrained_ = false;
         build_tree();
       }
-
+      
       if (is_key_going_down(key_num_5)) {
         ts.load("Tree5.txt");
         rotation_angle_ = ts.get_rotation();
@@ -133,6 +133,19 @@ namespace octet {
       is_width_constrained_ = false;
 
       build_tree();
+
+
+      printf("Press 1 for Tree1\n");
+      printf("Press 2 for Tree2\n");
+      printf("Press 3 for Tree3\n");
+      printf("Press 4 for Tree4\n");
+      printf("Press 5 for Tree5\n");
+      printf("Press 6 for Tree6\n");
+      printf("Press 7 for Dragon Curve\n");
+      printf("Press 8 for Sierpinski's Triangle\n");
+      printf("Press 9 for Koch Curve\n");
+      printf("Press Q/W to decrement/increment a step in the L-System");
+      printf("Press A/S to decrement/increment the rotation angle");
     }
 
     /// this is called to draw the world
