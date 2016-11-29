@@ -74,24 +74,29 @@ private:
   // so we can scale the tree to fit into the camera view.
   // formula taken from Greg Neill's post 
   // on: https://groups.google.com/forum/#!topic/alt.math/sj4tTuXpxE0
-  void rescale() {
+  void rescale(bool is_width_constrained) {
     float tree_range_x = max_position_.x - min_position_.x;
     float tree_range_y = max_position_.y - min_position_.y;
     float screen_range = 1 - (-1);
 
-    for (int i = 0; i < lines_.size(); i++) {
-      lines_[i].start.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].start.x * (screen_range) / (tree_range_y));
-      lines_[i].end.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].end.x * (screen_range) / (tree_range_y));
-      lines_[i].start.y = (max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].start.y * (screen_range) / (tree_range_y);
-      lines_[i].end.y = (max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].end.y * (screen_range) / (tree_range_y);
+    if (is_width_constrained) {
+      for (int i = 0; i < lines_.size(); i++) {
+        lines_[i].start.x = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].start.x * (screen_range) / (tree_range_x);
+        lines_[i].end.x = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].end.x * (screen_range) / (tree_range_x);
+        lines_[i].start.y = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].start.y * (screen_range) / (tree_range_x);
+        lines_[i].end.y = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].end.y * (screen_range) / (tree_range_x);
+      }
+    }
+    else {
+      for (int i = 0; i < lines_.size(); i++) {
+        lines_[i].start.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].start.x * (screen_range) / (tree_range_y));
+        lines_[i].end.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].end.x * (screen_range) / (tree_range_y));
+        lines_[i].start.y = (max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].start.y * (screen_range) / (tree_range_y);
+        lines_[i].end.y = (max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].end.y * (screen_range) / (tree_range_y);
+      }
     }
 
-    for (int i = 0; i < lines_.size(); i++) {
-      lines_[i].start.x = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].start.x * (screen_range) / (tree_range_x);
-      lines_[i].end.x = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].end.x * (screen_range) / (tree_range_x);
-      lines_[i].start.y = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].start.y * (screen_range) / (tree_range_x);
-      lines_[i].end.y = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].end.y * (screen_range) / (tree_range_x);
-    }
+
   }
 
   void reset() {
@@ -117,7 +122,7 @@ public:
     }
   }
 
-  void generate_tree(std::string& treeStringMap, float rotationAngle, float x, float y, float angle) {
+  void generate_tree(std::string& treeStringMap, float rotationAngle, float x, float y, float angle, bool widthConstrained) {
     lines_.clear();
     branch_points_.clear();
     for (int i = 0; i < treeStringMap.length(); i++) {
@@ -137,8 +142,7 @@ public:
         return_to_trunk();
       }
     } // end of for loop
-
-    rescale();
+    rescale(widthConstrained);
     set_origin(x, y, angle);
   }
 

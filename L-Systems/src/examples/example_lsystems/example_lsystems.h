@@ -17,6 +17,7 @@ namespace octet {
     turtle t;
 
     float rotation_angle_;
+    bool is_width_constrained_;
 
   public:
     /// this is called when we construct the class before everything is initialised.
@@ -29,30 +30,30 @@ namespace octet {
         ts.apply_rules();
       }
 
-      t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
+      t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
     }
 
     void modify_tree() {
       if (is_key_going_down(key_q)) {
         ts.decrement_iteration();
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
+        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
       }
 
       if (is_key_going_down(key_w)) {
         ts.apply_rules();
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
+        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
       }
 
       if (is_key_down(key_a)) {
         rotation_angle_ += 0.25f;
         ts.set_rotation(rotation_angle_);
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
+        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
       }
 
       if (is_key_down(key_s)) {
         rotation_angle_ -= 0.25f;
         ts.set_rotation(rotation_angle_);
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
+        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
       }
     }
 
@@ -60,54 +61,63 @@ namespace octet {
       if (is_key_going_down(key_num_1)) {
         ts.load("Tree1.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = false;
         build_tree();
       }
 
       if (is_key_going_down(key_num_2)) {
         ts.load("Tree2.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = false;
         build_tree();
       }
 
       if (is_key_going_down(key_num_3)) {
         ts.load("Tree3.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = false;
         build_tree();
       }
 
       if (is_key_going_down(key_num_4)) {
         ts.load("Tree4.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = false;
         build_tree();
       }
 
       if (is_key_going_down(key_num_5)) {
         ts.load("Tree5.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = false;
         build_tree();
       }
 
       if (is_key_going_down(key_num_6)) {
         ts.load("Tree6.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = false;
         build_tree();
       }
 
       if (is_key_going_down(key_num_7)) {
         ts.load("DragonCurve.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = true;
         build_tree();
       }
 
       if (is_key_going_down(key_num_8)) {
         ts.load("SierpinskiTriangle-Arrowhead.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = true;
         build_tree();
       }
 
       if (is_key_going_down(key_num_9)) {
         ts.load("KochCurve.txt");
         rotation_angle_ = ts.get_rotation();
+        is_width_constrained_ = true;
         build_tree();
       }
     }
@@ -120,6 +130,7 @@ namespace octet {
       ts.load("Tree1.txt");
 
       rotation_angle_ = ts.get_rotation();
+      is_width_constrained_ = false;
 
       build_tree();
     }
