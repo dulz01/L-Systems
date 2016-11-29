@@ -21,22 +21,24 @@ namespace octet {
     example_lsystems(int argc, char **argv) : app(argc, argv) {}
     
     void build_tree() {
+      t.set_origin(ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
+
       for (int i = 0; i < ts.get_counter(); i++) {
         ts.apply_rules();
       }
 
-      t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation());
+      t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
     }
 
     void modify_tree() {
       if (is_key_going_down(key_q)) {
         ts.decrement_iteration();
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation());
+        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
       }
 
       if (is_key_going_down(key_w)) {
         ts.apply_rules();
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation());
+        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
       }
     }
 
@@ -78,6 +80,11 @@ namespace octet {
 
       if (is_key_going_down(key_num_8)) {
         ts.load("SierpinskiTriangle-Arrowhead.txt");
+        build_tree();
+      }
+
+      if (is_key_going_down(key_num_9)) {
+        ts.load("KochCurve.txt");
         build_tree();
       }
     }

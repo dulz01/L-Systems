@@ -35,7 +35,6 @@ private:
     position_.y = next_y;
     path_.end = position_;
     
-
     if (min_position_.x > position_.x) {
       min_position_.x = position_.x;
     }
@@ -50,8 +49,7 @@ private:
     if (max_position_.y < position_.y) {
       max_position_.y = position_.y;
     }
-
-
+    
     lines_.push_back(path_);
   }
 
@@ -71,14 +69,7 @@ private:
     position_ = branch_points_.back();
     branch_points_.pop_back();
   }
-
-  void reset() {
-    
-    position_.x = max_position_.x = min_position_.x = 0.0f;
-    position_.y = max_position_.y = min_position_.y = -1.0f;
-    position_.dir = max_position_.dir = min_position_.dir = 90.0f;
-  }
-
+  
   // converting the range from the tree to the range of the screen.
   // so we can scale the tree to fit into the camera view.
   // formula taken from Greg Neill's post 
@@ -88,11 +79,17 @@ private:
     float screen_range = 1 - (-1);
 
     for (int i = 0; i < lines_.size(); i++) {
-      lines_[i].start.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y) + lines_[i].start.x * (screen_range) / (tree_range_y));
+      lines_[i].start.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].start.x * (screen_range) / (tree_range_y));
       lines_[i].end.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].end.x * (screen_range) / (tree_range_y));
       lines_[i].start.y = (max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].start.y * (screen_range) / (tree_range_y);
       lines_[i].end.y = (max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].end.y * (screen_range) / (tree_range_y);
     }
+  }
+
+  void reset() {
+    position_.x = max_position_.x = min_position_.x = 0.0f;
+    position_.y = max_position_.y = min_position_.y = -1.0f;
+    position_.dir = max_position_.dir = min_position_.dir = 90.0f;
   }
 
 public:
@@ -112,7 +109,7 @@ public:
     }
   }
 
-  void generate_tree(std::string& treeStringMap, float rotationAngle) {
+  void generate_tree(std::string& treeStringMap, float rotationAngle, float x, float y, float angle) {
     lines_.clear();
     branch_points_.clear();
     for (int i = 0; i < treeStringMap.length(); i++) {
@@ -134,7 +131,12 @@ public:
     } // end of for loop
 
     rescale();
+    set_origin(x, y, angle);
+  }
 
-    reset();
+  void set_origin(float x, float y, float angle) {
+    position_.x = max_position_.x = min_position_.x = x;
+    position_.y = max_position_.y = min_position_.y = y;
+    position_.dir = max_position_.dir = min_position_.dir = angle;
   }
 };
