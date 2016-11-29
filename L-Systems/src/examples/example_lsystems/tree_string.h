@@ -66,6 +66,10 @@ public:
     return rotation_;
   }
 
+  void set_rotation(float rotation) {
+    rotation_ = rotation;
+  }
+
   float get_start_pos_x() {
     return start_pos_x_;
   }
