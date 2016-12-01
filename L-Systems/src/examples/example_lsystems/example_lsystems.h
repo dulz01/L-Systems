@@ -144,8 +144,8 @@ namespace octet {
       printf("Press 7 for Dragon Curve\n");
       printf("Press 8 for Sierpinski's Triangle\n");
       printf("Press 9 for Koch Curve\n");
-      printf("Press Q/W to decrement/increment a step in the L-System");
-      printf("Press A/S to decrement/increment the rotation angle");
+      printf("Press Q/W to decrement/increment a step in the L-System\n");
+      printf("Press A/S to decrement/increment the rotation angle\n");
     }
 
     /// this is called to draw the world

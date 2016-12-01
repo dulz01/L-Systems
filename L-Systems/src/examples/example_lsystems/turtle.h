@@ -85,18 +85,16 @@ private:
         lines_[i].end.x = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].end.x * (screen_range) / (tree_range_x);
         lines_[i].start.y = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].start.y * (screen_range) / (tree_range_x);
         lines_[i].end.y = (max_position_.x * -1 - min_position_.x * 1) / (tree_range_x)+lines_[i].end.y * (screen_range) / (tree_range_x);
-      }
-    }
+      }// end of for loop
+    }// end of if statement
     else {
       for (int i = 0; i < lines_.size(); i++) {
         lines_[i].start.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].start.x * (screen_range) / (tree_range_y));
         lines_[i].end.x = 1 + ((max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].end.x * (screen_range) / (tree_range_y));
         lines_[i].start.y = (max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].start.y * (screen_range) / (tree_range_y);
         lines_[i].end.y = (max_position_.y * -1 - min_position_.y * 1) / (tree_range_y)+lines_[i].end.y * (screen_range) / (tree_range_y);
-      }
-    }
-
-
+      }// end of for loop
+    }// end of if statement
   }
 
   void reset() {
