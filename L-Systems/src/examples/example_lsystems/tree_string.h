@@ -22,6 +22,7 @@ public:
   tree_string() : counter_(0), rotation_(0),
     start_pos_x_(0), start_pos_y_(0), start_pos_angle_(0) {}
 
+  // rewrite given string
   void apply_rules() {
     std::string new_str;
     previous_states_.push_back(current_state_);
@@ -37,7 +38,6 @@ public:
       }
     }
     current_state_ = new_str;
-    //std::cout << current_state_ << std::endl;
   }
 
   void decrement_iteration() {
@@ -70,6 +70,7 @@ public:
     rotation_ = rotation;
   }
 
+  // for turtle origin
   float get_start_pos_x() {
     return start_pos_x_;
   }
@@ -82,7 +83,7 @@ public:
     return start_pos_angle_;
   }
 
-  std::string& get_TreeStringMap() {
+  std::string& get_tree_string_map() {
     return current_state_;
   }
 };

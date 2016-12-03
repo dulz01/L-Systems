@@ -23,6 +23,7 @@ namespace octet {
     /// this is called when we construct the class before everything is initialised.
     example_lsystems(int argc, char **argv) : app(argc, argv) {}
     
+    // called after loading each config file.
     void build_tree() {
       t.set_origin(ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle());
 
@@ -30,33 +31,35 @@ namespace octet {
         ts.apply_rules();
       }
 
-      t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
+      t.generate_tree(ts.get_tree_string_map(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
     }
 
+    // Step through iterations of the shape and modify its rotation angle
     void modify_tree() {
       if (is_key_going_down(key_q)) {
         ts.decrement_iteration();
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
+        t.generate_tree(ts.get_tree_string_map(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
       }
 
       if (is_key_going_down(key_w)) {
         ts.apply_rules();
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
+        t.generate_tree(ts.get_tree_string_map(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
       }
 
       if (is_key_down(key_a)) {
         rotation_angle_ += 0.25f;
         ts.set_rotation(rotation_angle_);
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
+        t.generate_tree(ts.get_tree_string_map(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
       }
 
       if (is_key_down(key_s)) {
         rotation_angle_ -= 0.25f;
         ts.set_rotation(rotation_angle_);
-        t.generate_tree(ts.get_TreeStringMap(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
+        t.generate_tree(ts.get_tree_string_map(), ts.get_rotation(), ts.get_start_pos_x(), ts.get_start_pos_y(), ts.get_start_pos_angle(), is_width_constrained_);
       }
     }
 
+    // Choose a geometric shape with number row keys 1-9
     void select_tree() {
       if (is_key_going_down(key_num_1)) {
         ts.load("Tree1.txt");

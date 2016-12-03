@@ -26,7 +26,9 @@ class turtle {
 
 private:
   void go_forward() {
-
+    // uses polar to cartesian coordinates conversion.
+    // angle is also converted to radians
+    // https://www.mathsisfun.com/polar-cartesian-coordinates.html
     float next_x = position_.x + distance_ * cos(pi_ * position_.dir / 180.0);
     float next_y = position_.y + distance_ * sin(pi_ * position_.dir / 180.0);
 
@@ -35,6 +37,8 @@ private:
     position_.y = next_y;
     path_.end = position_;
 
+    // saves minimum position and maximum position 
+    // for rescaling calculations later.
     if (min_position_.x > position_.x) {
       min_position_.x = position_.x;
     }
